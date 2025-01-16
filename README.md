@@ -8,18 +8,28 @@
 
 run the app 
 
+
 git clone "github URL"
 
+
 cd Frontend
+
 npm install
+
 create the .env file and set VITE_APP_URL 
+
 npm run dev - to start 
 
 
+
 cd Server
+
 npm install
+
 create .env file and set MONGO_URI = ""
+
 JWT_SECRET=""
+
 PORT=""
 
 now , npm start ot run
