@@ -1,5 +1,4 @@
-# WORKSUIT-Employee-Attendance-and-Management-System
-
+# Employee Management System
 ## Home Screen
 ![Home Screen](Frontend/public/images/github/Home.png)
 
