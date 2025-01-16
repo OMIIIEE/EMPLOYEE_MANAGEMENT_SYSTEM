@@ -92,6 +92,7 @@ router.post("/employee_clockin/:id", async (req, res) => {
   const { location, workFromType } = req.body;
 
   try {
+    // Create a new clock record
     const clockRecord = new ClockRecord({
       employee: id,
       clockIn: new Date(),
@@ -100,6 +101,14 @@ router.post("/employee_clockin/:id", async (req, res) => {
     });
 
     await clockRecord.save();
+
+    // Update the Employee's clockRecords array
+    await Employee.findByIdAndUpdate(
+      id,
+      { $push: { clockRecords: clockRecord._id } },
+      { new: true }
+    );
+
     return res.status(200).json({ status: "success" });
   } catch (error) {
     console.error("Error while clocking in:", error);
@@ -112,10 +121,12 @@ router.post("/employee_clockout/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
+    // Find the active clock-in record
     const clockRecord = await ClockRecord.findOne({ employee: id, clockOut: null });
     if (clockRecord) {
       clockRecord.clockOut = new Date();
       await clockRecord.save();
+
       return res.status(200).json({ success: true });
     } else {
       return res.status(404).json({ success: false, message: "Clock-in record not found" });
@@ -126,12 +137,13 @@ router.post("/employee_clockout/:id", async (req, res) => {
   }
 });
 
+
 // Fetch employee's calendar (clock-in/out data)
 router.get("/calendar/:employeeId", async (req, res) => {
-  const { employeeId } = req.params;
+  const { employeeId} = req.params;
 
   try {
-    const clockRecords = await ClockRecord.find({ employeeId }).sort({ clockIn: -1 });
+    const clockRecords = await ClockRecord.find({employee: employeeId }).sort({ clockIn: -1 });
 
     const calendarData = clockRecords.map((record) => {
       const date = record.clockIn.toISOString().slice(0, 10);
