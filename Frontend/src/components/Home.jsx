@@ -29,37 +29,40 @@ const Home = () => {
       .catch(error => console.error('Error fetching admin records:', error));
   };
 
+
   const adminCount = () => {
     axios.get(`${apiUrl}/auth/admin_count`)
       .then(result => {
         if (result.data.Status) {
-          setAdminTotal(result.data.Result[0].admin);
+          setAdminTotal(result.data.Result); // Directly use Result
         }
       })
       .catch(error => console.error('Error fetching admin count:', error));
   };
-
+  
   const employeeCount = () => {
     axios.get(`${apiUrl}/auth/employee_count`)
       .then(result => {
         if (result.data.Status) {
-          setEmployeeTotal(result.data.Result[0].employee);
+          setEmployeeTotal(result.data.Result); // Directly use Result
         }
       })
       .catch(error => console.error('Error fetching employee count:', error));
   };
-
+  
   const salaryCount = () => {
     axios.get(`${apiUrl}/auth/salary_count`)
       .then(result => {
-        if (result.data.Status) {
-          setSalaryTotal(result.data.Result[0].salaryofemp);
-        } else {
-          alert(result.data.Error);
+        if (result.data.Status && result.data.Result.length > 0) {
+          setSalaryTotal(result.data.Result[0].totalSalary); // Access totalSalary
         }
       })
       .catch(error => console.error('Error fetching salary count:', error));
   };
+  
+
+
+
   const handleEditAdmin = (id) => {
     setEditingAdminId(id);
     // Fetch the admin's current email and populate the form field

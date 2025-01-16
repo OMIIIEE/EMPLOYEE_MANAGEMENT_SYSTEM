@@ -132,9 +132,6 @@ const upload = multer({ storage: storage });
 // add emplyee
 router.post("/add_employee", upload.single("image"), async (req, res) => {
   try {
-
-    
-
     // Directly store the password as entered (no hashing)
     const employee = new Employee({
       name: req.body.name,

@@ -31,28 +31,34 @@ const Employee = () => {
   
 
 
-  const handleDelete = (id) => {
-    axios
-      .delete(`${apiUrl}/auth/delete_employee/${id}`)
-      .then((response) => {
-        if (response.data.success) {
-          // Refresh the employee list
-          axios
-            .get(`${apiUrl}/auth/employee`)
-            .then((response) => {
-              if (response.data.success && Array.isArray(response.data.employees)) {
-                setEmployees(response.data.employees);
-              } else {
-                alert(response.data.message || "Failed to refresh employee list");
-              }
-            })
-            .catch((error) => console.error("Error refreshing employees:", error));
-        } else {
-          alert(response.data.message || "Failed to delete employee");
-        }
-      })
-      .catch((error) => console.error("Error deleting employee:", error));
+  const handleDelete = (_id, name) => {
+    // Ask for confirmation before proceeding with the delete
+    const isConfirmed = window.confirm(`Are you sure you want to delete employee: ${name}?`);
+  
+    if (isConfirmed) {
+      axios
+        .delete(`${apiUrl}/auth/delete_employee/${_id}`)
+        .then((response) => {
+          if (response.data.success) {
+            // Refresh the employee list
+            axios
+              .get(`${apiUrl}/auth/employee`)
+              .then((response) => {
+                if (response.data.success && Array.isArray(response.data.employees)) {
+                  setEmployees(response.data.employees);
+                } else {
+                  alert(response.data.message || "Failed to refresh employee list");
+                }
+              })
+              .catch((error) => console.error("Error refreshing employees:", error));
+          } else {
+            alert(response.data.message || "Failed to delete employee");
+          }
+        })
+        .catch((error) => console.error("Error deleting employee:", error));
+    }
   };
+  
 
   return (
     <div className="px-5 mt-3">
@@ -110,7 +116,7 @@ const Employee = () => {
                     </Link>
                     <button
                       className="btn btn-warning btn-sm"
-                      onClick={() => handleDelete(employee.id)}
+                      onClick={() => handleDelete(employee._id,employee.name)}
                     >
                       Delete
                     </button>

@@ -17,7 +17,7 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, handleLogout }) => {
                 >
                     <span className="fs-5 fw-bolder d-flex align-items-center justify-content-center">
                         <img src="/images/worksuite_img.png" alt="Logo Image" style={{ maxWidth: "40px", height: "auto", width:'40px !important', marginLeft:'5px'}} />
-                        <h2 style={{fontSize:'22px', fontWeight:'900', marginTop:'0px', marginBottom:'0px', fontFamily:'Quicksand'}}>{sidebarOpen ? 'WORKSUITE' : ''}</h2>
+                        <h2 style={{fontSize:'22px', fontWeight:'900', marginTop:'0px', marginBottom:'0px', fontFamily:'Quicksand'}}>{sidebarOpen ? 'WORKMATE' : ''}</h2>
                     </span>
                 </Link>
                 <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100 mt-2" id="menu">
@@ -61,16 +61,7 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, handleLogout }) => {
                             <span className={`ms-2 d-none d-sm-inline ${!sidebarOpen ? 'hidden' : ''}`}>Admins</span>
                         </Link>
                     </li>
-                    <li className="w-100">
-                        <Link
-                            to="/dashboard/officeaddress"
-                            className={`nav-link text-white ${sidebarOpen ? 'px-3' : 'px-1 justify-content-center'} my-1 py-2 align-middle ${location.pathname === '/dashboard/officeaddress' ? 'active' : ''}`}
-                            title={!sidebarOpen ? "Office" : ''}
-                        >
-                            <i className="fs-5 mx-1 bi bi-geo-alt"></i>
-                            <span className={`ms-2 d-none d-sm-inline ${!sidebarOpen ? 'hidden' : ''}`}>Office</span>
-                        </Link>
-                    </li>
+                    
                 </ul>
                 <Button variant="btn btn-danger" onClick={handleLogout} className="nav-link-logout mt-auto mb-3 w-100 align-middle" title={!sidebarOpen ? "Logout" : ''}>
                     <i className={`fs-5 px-1 bi-power`}></i>
